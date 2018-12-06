@@ -174,6 +174,8 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\CustomerController.cs" />
+    <Compile Include="Controllers\EmployeeController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
@@ -196,6 +198,26 @@
     <Compile Include="Migrations\201812060711288_Employee.cs" />
     <Compile Include="Migrations\201812060711288_Employee.Designer.cs">
       <DependentUpon>201812060711288_Employee.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812060751016_AddedDbSets.cs" />
+    <Compile Include="Migrations\201812060751016_AddedDbSets.Designer.cs">
+      <DependentUpon>201812060751016_AddedDbSets.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812061007511_AddingRole.cs" />
+    <Compile Include="Migrations\201812061007511_AddingRole.Designer.cs">
+      <DependentUpon>201812061007511_AddingRole.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812061014476_RemovedExtraDBField.cs" />
+    <Compile Include="Migrations\201812061014476_RemovedExtraDBField.Designer.cs">
+      <DependentUpon>201812061014476_RemovedExtraDBField.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812061027455_EmployeeRole.cs" />
+    <Compile Include="Migrations\201812061027455_EmployeeRole.Designer.cs">
+      <DependentUpon>201812061027455_EmployeeRole.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812061041319_EmployeeRoles.cs" />
+    <Compile Include="Migrations\201812061041319_EmployeeRoles.Designer.cs">
+      <DependentUpon>201812061041319_EmployeeRoles.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -267,6 +289,14 @@
     <Content Include="Views\Users\Index.cshtml" />
     <Content Include="Views\Role\Index.cshtml" />
     <Content Include="Views\Role\Create.cshtml" />
+    <Content Include="Views\Customer\Register.cshtml" />
+    <Content Include="Views\Customer\Login.cshtml" />
+    <Content Include="Views\Customer\LoggedIn.cshtml" />
+    <Content Include="Views\Employee\LoggedIn.cshtml" />
+    <Content Include="Views\Employee\Login.cshtml" />
+    <Content Include="Views\Employee\Register.cshtml" />
+    <Content Include="Views\Employee\Index.cshtml" />
+    <Content Include="Views\Customer\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -297,6 +327,21 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201812060711288_Employee.resx">
       <DependentUpon>201812060711288_Employee.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812060751016_AddedDbSets.resx">
+      <DependentUpon>201812060751016_AddedDbSets.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812061007511_AddingRole.resx">
+      <DependentUpon>201812061007511_AddingRole.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812061014476_RemovedExtraDBField.resx">
+      <DependentUpon>201812061014476_RemovedExtraDBField.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812061027455_EmployeeRole.resx">
+      <DependentUpon>201812061027455_EmployeeRole.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812061041319_EmployeeRoles.resx">
+      <DependentUpon>201812061041319_EmployeeRoles.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

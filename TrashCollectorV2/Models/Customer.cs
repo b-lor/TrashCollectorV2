@@ -58,5 +58,6 @@ namespace TrashCollectorV2.Models
 
         [DataType(DataType.Date)]
         public DateTime? EndDate { get; set; }
+
     }
 }
