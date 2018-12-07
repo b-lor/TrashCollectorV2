@@ -2,7 +2,9 @@
 using Microsoft.AspNet.Identity.EntityFramework;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using TrashCollectorV2.Models;
@@ -86,9 +88,9 @@ namespace TrashCollectorV2.Controllers
 
         public void AddCustomerToRole(Customer customer)
         {
-            ApplicationDbContext context = new ApplicationDbContext();
+            ApplicationDbContext db = new ApplicationDbContext();
 
-            var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
+            var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
 
             var user = new ApplicationUser();
             user.UserName = customer.Username;
@@ -106,5 +108,116 @@ namespace TrashCollectorV2.Controllers
             }
 
         }
+
+
+
+        //public ActionResult Edit()
+        //{
+        //    ApplicationDbContext db = new ApplicationDbContext();
+        //    var editCustomer = db.Customer.Where(e => e.Id.Equals(Session["Id"])).First();
+
+        //        return View(editCustomer);
+        //}
+        //public ActionResult Detail()
+        //{
+        //    ApplicationDbContext db = new ApplicationDbContext();
+        //    var detail = db.Customer.FirstOrDefault(d => d.Id.Equals(Session["Id"]));
+        //    if (detail == null)
+        //        return View("Index", "Customer");
+        //    else 
+        //    return View(detail);
+        //}
+
+        //public ActionResult Edit(string email)
+        //{
+        //    ApplicationDbContext db = new ApplicationDbContext();
+        //    var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
+        //    ApplicationUser appUser = new ApplicationUser();
+        //    appUser = UserManager.FindByEmail(email);
+        //    Customer customer = new Customer();
+
+        //    customer.Username = appUser.UserName;
+        //    customer.Email = appUser.Email;
+
+        //    return View(customer);
+        //}
+
+        //[HttpPost]
+        //public async Task<ActionResult> Edit(Customer model)
+        //{
+        //    ApplicationDbContext db = new ApplicationDbContext();
+
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return View(model);
+        //    }
+        //    var store = new UserStore<ApplicationUser>(new ApplicationDbContext());
+        //    var manager = new UserManager<ApplicationUser>(store);
+        //    var currentUser = manager.FindByEmail(model.Email);
+        //    currentUser.UserName = model.Username;
+        //    currentUser.Email = model.Email;
+
+        //    await manager.UpdateAsync(currentUser);
+        //    var ctx = store.Context;
+        //    ctx.SaveChanges();
+        //    TempData["msg"] = "Profile Changes Saved !";
+        //    return RedirectToAction("Index");
+        //}
+
+        public ActionResult Edit()
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            string username = User.Identity.Name;
+
+            Customer customer = db.Customer.FirstOrDefault(u => u.Username.Equals(username));
+
+            Customer updateCustomer = new Customer();
+            updateCustomer.FirstName = customer.FirstName;
+            updateCustomer.LastName = customer.LastName;
+            updateCustomer.Address1 = customer.Address1;
+            updateCustomer.Address2 = customer.Address2;
+            updateCustomer.City = customer.City;
+            updateCustomer.State = customer.State;
+            updateCustomer.ZipCode = customer.ZipCode;
+            updateCustomer.Username = customer.Username;
+            updateCustomer.Email = customer.Email;
+            updateCustomer.Password = customer.Password;
+            updateCustomer.ConfirmPassword = customer.ConfirmPassword;
+
+            return View(updateCustomer);
+        }
+        [HttpPost]
+        public ActionResult Edit(Customer userprofile)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            if (ModelState.IsValid)
+            {
+                string username = User.Identity.Name;
+                // Get the userprofile
+                Customer customer = db.Customer.FirstOrDefault(u => u.Username.Equals(username));
+
+                // Update fields
+                customer.FirstName = userprofile.FirstName;
+                customer.LastName = userprofile.LastName;
+                customer.Address1 = userprofile.Address1;
+                customer.Address2 = userprofile.Address2;
+                customer.City = userprofile.City;
+                customer.State = userprofile.State;
+                customer.ZipCode = userprofile.ZipCode;
+                customer.Username = userprofile.Username;
+                customer.Email = userprofile.Email;
+                customer.Password = userprofile.Password;
+                customer.ConfirmPassword = userprofile.ConfirmPassword;
+
+                db.Entry(customer).State = EntityState.Modified;
+
+                db.SaveChanges();
+
+                return RedirectToAction("Index", "Home"); // or whatever
+            }
+
+            return View(userprofile);
+        }
+
     }
 }

@@ -2,6 +2,7 @@
 using Microsoft.AspNet.Identity.EntityFramework;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -83,9 +84,9 @@ namespace TrashCollectorV2.Controllers
 
         public void AddEmployeeToRole(Employee employee)
         {
-            ApplicationDbContext context = new ApplicationDbContext();
+            ApplicationDbContext db = new ApplicationDbContext();
 
-            var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
+            var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
 
             var user = new ApplicationUser();
             user.UserName = employee.Username;
@@ -102,6 +103,53 @@ namespace TrashCollectorV2.Controllers
 
             }
 
+        }
+
+        public ActionResult Edit()
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            string username = User.Identity.Name;
+
+            Employee employee = db.Employee.FirstOrDefault(u => u.Username.Equals(username));
+
+            Employee updateEmployee = new Employee();
+            //updateEmployee.FirstName = employee.FirstName;
+            //updateEmployee.LastName = employee.LastName;
+            //updateEmployee.ZipCode = employee.ZipCode;
+            updateEmployee.Username = employee.Username;
+            updateEmployee.Email = employee.Email;
+            updateEmployee.Password = employee.Password;
+            updateEmployee.ConfirmPassword = employee.ConfirmPassword;
+
+            return View(updateEmployee);
+        }
+        [HttpPost]
+        public ActionResult Edit(Employee userprofile)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            if (ModelState.IsValid)
+            {
+                string username = User.Identity.Name;
+                // Get the userprofile
+                Employee employee = db.Employee.FirstOrDefault(u => u.Username.Equals(username));
+
+                // Update fields
+                //employee.FirstName = userprofile.FirstName;
+                //employee.LastName = userprofile.LastName;
+                //employee.ZipCode = userprofile.ZipCode;
+                employee.Username = userprofile.Username;
+                employee.Email = userprofile.Email;
+                employee.Password = userprofile.Password;
+                employee.ConfirmPassword = userprofile.ConfirmPassword;
+
+                db.Entry(employee).State = EntityState.Modified;
+
+                db.SaveChanges();
+
+                return RedirectToAction("Index", "Home"); // or whatever
+            }
+
+            return View(userprofile);
         }
     }
 }
