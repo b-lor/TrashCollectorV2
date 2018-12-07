@@ -129,6 +129,10 @@ namespace TrashCollectorV2.Controllers
             updateCustomer.Email = customer.Email;
             updateCustomer.Password = customer.Password;
             updateCustomer.ConfirmPassword = customer.ConfirmPassword;
+            updateCustomer.DayOfWeek = customer.DayOfWeek;
+            updateCustomer.ExtraPickUp = customer.ExtraPickUp;
+            updateCustomer.StartDate = customer.StartDate;
+            updateCustomer.EndDate = customer.EndDate;
 
             return View(updateCustomer);
         }
@@ -154,6 +158,10 @@ namespace TrashCollectorV2.Controllers
                 customer.Email = userprofile.Email;
                 customer.Password = userprofile.Password;
                 customer.ConfirmPassword = userprofile.ConfirmPassword;
+                customer.DayOfWeek = userprofile.DayOfWeek;
+                customer.ExtraPickUp = userprofile.ExtraPickUp;
+                customer.StartDate = userprofile.StartDate;
+                customer.EndDate = userprofile.EndDate;
 
                 db.Entry(customer).State = EntityState.Modified;
 
@@ -165,5 +173,6 @@ namespace TrashCollectorV2.Controllers
             return View(userprofile);
         }
 
+      
     }
 }

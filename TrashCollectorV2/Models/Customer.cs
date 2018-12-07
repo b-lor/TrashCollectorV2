@@ -47,7 +47,8 @@ namespace TrashCollectorV2.Models
         [DataType(DataType.Password)]
         public string ConfirmPassword { get; set; }
 
-        public string DayOfWeek { get; set; }
+
+        public DayOfWeek? DayOfWeek { get; set; }
 
         [DataType(DataType.Date)]
         public DateTime? ExtraPickUp { get; set; }
