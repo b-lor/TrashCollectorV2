@@ -6,7 +6,7 @@ using System.Web;
 
 namespace TrashCollectorV2.Models
 {
-    public class DayOfWeek
+    public class Days
     {
         [Key]
         public int Id { get; set; }

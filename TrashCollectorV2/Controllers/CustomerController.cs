@@ -110,60 +110,6 @@ namespace TrashCollectorV2.Controllers
         }
 
 
-
-        //public ActionResult Edit()
-        //{
-        //    ApplicationDbContext db = new ApplicationDbContext();
-        //    var editCustomer = db.Customer.Where(e => e.Id.Equals(Session["Id"])).First();
-
-        //        return View(editCustomer);
-        //}
-        //public ActionResult Detail()
-        //{
-        //    ApplicationDbContext db = new ApplicationDbContext();
-        //    var detail = db.Customer.FirstOrDefault(d => d.Id.Equals(Session["Id"]));
-        //    if (detail == null)
-        //        return View("Index", "Customer");
-        //    else 
-        //    return View(detail);
-        //}
-
-        //public ActionResult Edit(string email)
-        //{
-        //    ApplicationDbContext db = new ApplicationDbContext();
-        //    var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
-        //    ApplicationUser appUser = new ApplicationUser();
-        //    appUser = UserManager.FindByEmail(email);
-        //    Customer customer = new Customer();
-
-        //    customer.Username = appUser.UserName;
-        //    customer.Email = appUser.Email;
-
-        //    return View(customer);
-        //}
-
-        //[HttpPost]
-        //public async Task<ActionResult> Edit(Customer model)
-        //{
-        //    ApplicationDbContext db = new ApplicationDbContext();
-
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return View(model);
-        //    }
-        //    var store = new UserStore<ApplicationUser>(new ApplicationDbContext());
-        //    var manager = new UserManager<ApplicationUser>(store);
-        //    var currentUser = manager.FindByEmail(model.Email);
-        //    currentUser.UserName = model.Username;
-        //    currentUser.Email = model.Email;
-
-        //    await manager.UpdateAsync(currentUser);
-        //    var ctx = store.Context;
-        //    ctx.SaveChanges();
-        //    TempData["msg"] = "Profile Changes Saved !";
-        //    return RedirectToAction("Index");
-        //}
-
         public ActionResult Edit()
         {
             ApplicationDbContext db = new ApplicationDbContext();

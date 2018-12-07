@@ -175,6 +175,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
+    <Compile Include="Controllers\DayController.cs" />
     <Compile Include="Controllers\EmployeeController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -219,11 +220,23 @@
     <Compile Include="Migrations\201812061041319_EmployeeRoles.Designer.cs">
       <DependentUpon>201812061041319_EmployeeRoles.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201812070418030_removedDayofweekModel.cs" />
+    <Compile Include="Migrations\201812070418030_removedDayofweekModel.Designer.cs">
+      <DependentUpon>201812070418030_removedDayofweekModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812070419267_addedDayModel.cs" />
+    <Compile Include="Migrations\201812070419267_addedDayModel.Designer.cs">
+      <DependentUpon>201812070419267_addedDayModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812070420141_addedDayModelv2.cs" />
+    <Compile Include="Migrations\201812070420141_addedDayModelv2.Designer.cs">
+      <DependentUpon>201812070420141_addedDayModelv2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\DateAdd.cs" />
-    <Compile Include="Models\DayOfWeek.cs" />
+    <Compile Include="Models\Days.cs" />
     <Compile Include="Models\Employee.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -300,6 +313,9 @@
     <Content Include="Views\Customer\Edit.cshtml" />
     <Content Include="Views\Customer\Detail.cshtml" />
     <Content Include="Views\Employee\Edit.cshtml" />
+    <Content Include="Views\Day\Index.cshtml" />
+    <Content Include="Views\Day\Create.cshtml" />
+    <Content Include="Views\Day\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -345,6 +361,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201812061041319_EmployeeRoles.resx">
       <DependentUpon>201812061041319_EmployeeRoles.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812070418030_removedDayofweekModel.resx">
+      <DependentUpon>201812070418030_removedDayofweekModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812070419267_addedDayModel.resx">
+      <DependentUpon>201812070419267_addedDayModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812070420141_addedDayModelv2.resx">
+      <DependentUpon>201812070420141_addedDayModelv2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

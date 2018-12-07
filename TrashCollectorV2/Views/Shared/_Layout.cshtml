@@ -21,47 +21,54 @@
                 @Html.ActionLink("Create Account", "Register", "Customer", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
 
-                    @if (User.Identity.IsAuthenticated)
+
+                @if (User.Identity.IsAuthenticated)
+
+                {
+                    if (User.IsInRole("Admin"))
                     {
-                        if (User.IsInRole("Customer"))
-                        {
-
-                            <li>@Html.ActionLink("Edit", "Edit", "Customer")</li>
-                            <li>@Html.ActionLink("Detail", "Detail", "Customer")</li>
-
-
-                        }
-                    }
-
-                    @if (User.Identity.IsAuthenticated)
-                    {
-                        if (User.IsInRole("Employee"))
-                        {
-
-                            <li>@Html.ActionLink("Edit", "Edit", "Employee")</li>
-                            <li>@Html.ActionLink("Detail", "Detail", "Employee")</li>
-
-                        }
-                    }
-
-                    @if (User.Identity.IsAuthenticated)
-                    {
-                        if (User.IsInRole("Admin"))
-                        {
+                        <ul class="nav navbar-nav">
 
                             <li>@Html.ActionLink("View Customers", "Index", "Customer")</li>
                             <li>@Html.ActionLink("Create Customers", "Register", "Customer")</li>
                             <li>@Html.ActionLink("View Employees", "Index", "Employee")</li>
                             <li>@Html.ActionLink("Create Employees", "Register", "Employee")</li>
-
-                        }
+                            <li>@Html.ActionLink("Create Days", "Create", "Day")</li>
+                        </ul>
                     }
-                </ul>
+
+                    if (User.IsInRole("Employee"))
+                    {
+                        <ul class="nav navbar-nav">
+
+                            <li>@Html.ActionLink("Edit", "Edit", "Employee")</li>
+
+                        </ul>
+                    }
+
+
+                    if (User.IsInRole("Customer"))
+                    {
+                        <ul class="nav navbar-nav">
+
+                            <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                            <li>@Html.ActionLink("About", "About", "Home")</li>
+                            <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                            <li>@Html.ActionLink("Edit", "Edit", "Customer")</li>
+                        </ul>
+                    }
+                }
+                @* For unknown user *@
+                else
+                {
+                    <ul class="nav navbar-nav">
+                        <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                        <li>@Html.ActionLink("About", "About", "Home")</li>
+                        <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    </ul>
+                }
+
 
                 @Html.Partial("_LoginPartial")
             </div>
