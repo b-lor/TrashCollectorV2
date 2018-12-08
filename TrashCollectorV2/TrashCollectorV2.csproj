@@ -241,6 +241,18 @@
     <Compile Include="Migrations\201812071424246_DateAddChange.Designer.cs">
       <DependentUpon>201812071424246_DateAddChange.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201812071755109_AddedDisplayFormat.cs" />
+    <Compile Include="Migrations\201812071755109_AddedDisplayFormat.Designer.cs">
+      <DependentUpon>201812071755109_AddedDisplayFormat.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812071801409_AddedDisplayFormat1.cs" />
+    <Compile Include="Migrations\201812071801409_AddedDisplayFormat1.Designer.cs">
+      <DependentUpon>201812071801409_AddedDisplayFormat1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812071808516_AddedDisplayFormat2.cs" />
+    <Compile Include="Migrations\201812071808516_AddedDisplayFormat2.Designer.cs">
+      <DependentUpon>201812071808516_AddedDisplayFormat2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Customer.cs" />
@@ -274,7 +286,9 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -324,10 +338,13 @@
     <Content Include="Views\Day\Index.cshtml" />
     <Content Include="Views\Day\Create.cshtml" />
     <Content Include="Views\Day\Edit.cshtml" />
-    <Content Include="Views\Customer\Edit.cshtml" />
     <Content Include="Views\DateAdd\Create.cshtml" />
     <Content Include="Views\DateAdd\Index.cshtml" />
     <Content Include="Views\DateAdd\Edit.cshtml" />
+    <Content Include="Views\Customer\Edit.cshtml" />
+    <Content Include="Views\Customer\MyInfo.cshtml" />
+    <Content Include="Views\Customer\EditDate.cshtml" />
+    <Content Include="Views\Customer\Invoice.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -388,6 +405,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201812071424246_DateAddChange.resx">
       <DependentUpon>201812071424246_DateAddChange.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812071755109_AddedDisplayFormat.resx">
+      <DependentUpon>201812071755109_AddedDisplayFormat.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812071801409_AddedDisplayFormat1.resx">
+      <DependentUpon>201812071801409_AddedDisplayFormat1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812071808516_AddedDisplayFormat2.resx">
+      <DependentUpon>201812071808516_AddedDisplayFormat2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

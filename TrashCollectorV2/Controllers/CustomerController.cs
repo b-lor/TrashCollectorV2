@@ -23,6 +23,15 @@ namespace TrashCollectorV2.Controllers
             }
 
         }
+        public ViewResult Detail()
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            string username = User.Identity.Name;
+
+            Customer customer = db.Customer.FirstOrDefault(u => u.Username.Equals(username));
+            return View(customer);
+
+        }
 
         public ActionResult Register()
         {
@@ -109,10 +118,11 @@ namespace TrashCollectorV2.Controllers
 
         }
 
-
         public ActionResult Edit()
         {
             ApplicationDbContext db = new ApplicationDbContext();
+
+
             string username = User.Identity.Name;
 
             Customer customer = db.Customer.FirstOrDefault(u => u.Username.Equals(username));
@@ -125,14 +135,6 @@ namespace TrashCollectorV2.Controllers
             updateCustomer.City = customer.City;
             updateCustomer.State = customer.State;
             updateCustomer.ZipCode = customer.ZipCode;
-            updateCustomer.Username = customer.Username;
-            updateCustomer.Email = customer.Email;
-            updateCustomer.Password = customer.Password;
-            updateCustomer.ConfirmPassword = customer.ConfirmPassword;
-            updateCustomer.DayOfWeek = customer.DayOfWeek;
-            updateCustomer.ExtraPickUp = customer.ExtraPickUp;
-            updateCustomer.StartDate = customer.StartDate;
-            updateCustomer.EndDate = customer.EndDate;
 
             return View(updateCustomer);
         }
@@ -154,14 +156,6 @@ namespace TrashCollectorV2.Controllers
                 customer.City = userprofile.City;
                 customer.State = userprofile.State;
                 customer.ZipCode = userprofile.ZipCode;
-                customer.Username = userprofile.Username;
-                customer.Email = userprofile.Email;
-                customer.Password = userprofile.Password;
-                customer.ConfirmPassword = userprofile.ConfirmPassword;
-                customer.DayOfWeek = userprofile.DayOfWeek;
-                customer.ExtraPickUp = userprofile.ExtraPickUp;
-                customer.StartDate = userprofile.StartDate;
-                customer.EndDate = userprofile.EndDate;
 
                 db.Entry(customer).State = EntityState.Modified;
 
@@ -173,6 +167,180 @@ namespace TrashCollectorV2.Controllers
             return View(userprofile);
         }
 
-      
+        public ActionResult MyInfo()
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+
+
+            string username = User.Identity.Name;
+
+            Customer customer = db.Customer.FirstOrDefault(u => u.Username.Equals(username));
+
+            Customer updateCustomer = new Customer();
+            updateCustomer.Username = customer.Username;
+            updateCustomer.Email = customer.Email;
+            updateCustomer.Password = customer.Password;
+            updateCustomer.ConfirmPassword = customer.ConfirmPassword;
+
+            return View(updateCustomer);
+        }
+        [HttpPost]
+        public ActionResult MyInfo(Customer userprofile)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            if (ModelState.IsValid)
+            {
+                string username = User.Identity.Name;
+                // Get the userprofile
+                Customer customer = db.Customer.FirstOrDefault(u => u.Username.Equals(username));
+
+                // Update fields
+                customer.Username = userprofile.Username;
+                customer.Email = userprofile.Email;
+                customer.Password = userprofile.Password;
+                customer.ConfirmPassword = userprofile.ConfirmPassword;
+
+                db.Entry(customer).State = EntityState.Modified;
+
+                db.SaveChanges();
+
+                return RedirectToAction("Index", "Home"); // or whatever
+            }
+
+            return View(userprofile);
+        }
+
+        public ActionResult EditDate()
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+
+
+            string username = User.Identity.Name;
+
+            Customer customer = db.Customer.FirstOrDefault(u => u.Username.Equals(username));
+
+            Customer updateCustomer = new Customer();
+            updateCustomer.DayOfWeek = customer.DayOfWeek;
+            updateCustomer.ExtraPickUp = customer.ExtraPickUp;
+
+
+            DateAdd dateAdd = db.DateAdd.Take(1).FirstOrDefault();
+
+            DateTime StartDate = (DateTime)dateAdd.CurrentDate;
+            DateTime EndDate = (DateTime)dateAdd.FutureDate;
+
+
+            DayOfWeek? day = customer.DayOfWeek;
+
+            List<DateTime> dates =
+            Enumerable.Range(0, (int)((EndDate - StartDate).TotalDays) + 1)
+            .Select(n => StartDate.AddDays(n))
+            .ToList();
+
+            var dayCount = dates.Count(x => x.DayOfWeek == day);
+            ///
+            double extraDayCost;
+            DateTime extraPickUp = (DateTime)customer.ExtraPickUp;
+            if (extraPickUp >= StartDate && extraPickUp < EndDate)
+            {
+                extraDayCost = 25;
+            }
+            extraDayCost = 0;
+
+            double balance = dayCount * 20 + extraDayCost;
+
+
+
+
+            //double balance = dayCount;
+
+            updateCustomer.Balance = balance;
+            updateCustomer.StartDate = customer.StartDate;
+            updateCustomer.EndDate = customer.EndDate;
+
+            return View(updateCustomer);
+        }
+        [HttpPost]
+        public ActionResult EditDate(Customer userprofile)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            if (ModelState.IsValid)
+            {
+                string username = User.Identity.Name;
+                // Get the userprofile
+                Customer customer = db.Customer.FirstOrDefault(u => u.Username.Equals(username));
+
+                customer.DayOfWeek = userprofile.DayOfWeek;
+                customer.ExtraPickUp = userprofile.ExtraPickUp;
+
+                DateAdd dateAdd = db.DateAdd.Take(1).FirstOrDefault();
+
+                DateTime StartDate = (DateTime)dateAdd.CurrentDate;
+                DateTime EndDate = (DateTime)dateAdd.FutureDate;
+
+                DayOfWeek day = DayOfWeek.Monday;
+
+                List<DateTime> dates =
+                Enumerable.Range(0, (int)((EndDate - StartDate).TotalDays) + 1)
+                .Select(n => StartDate.AddDays(n))
+                .ToList();
+
+                var MondayCount = dates.Count(x => x.DayOfWeek == day);
+                double balance = MondayCount;
+
+                customer.Balance = balance;
+                customer.StartDate = userprofile.StartDate;
+                customer.EndDate = userprofile.EndDate;
+
+
+                db.Entry(customer).State = EntityState.Modified;
+
+                db.SaveChanges();
+
+                return RedirectToAction("Index", "Home"); // or whatever
+            }
+
+            return View(userprofile);
+        }
+
+        public ActionResult Invoice()
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+
+
+            string username = User.Identity.Name;
+
+            Customer customer = db.Customer.FirstOrDefault(u => u.Username.Equals(username));
+
+            Customer updateCustomer = new Customer();
+
+            updateCustomer.Balance = customer.Balance;
+
+
+            return View(updateCustomer);
+        }
+        [HttpPost]
+        public ActionResult Invoice(Customer userprofile)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            if (ModelState.IsValid)
+            {
+                string username = User.Identity.Name;
+                // Get the userprofile
+                Customer customer = db.Customer.FirstOrDefault(u => u.Username.Equals(username));
+
+                customer.Balance = customer.Balance;
+
+                db.Entry(customer).State = EntityState.Modified;
+
+                db.SaveChanges();
+
+                return RedirectToAction("Index", "Home"); // or whatever
+            }
+
+            return View(userprofile);
+        }
+
+
     }
 }
