@@ -22,6 +22,7 @@ namespace TrashCollectorV2.Controllers
 
         }
 
+
         public ActionResult Register()
         {
             return View();
@@ -151,5 +152,34 @@ namespace TrashCollectorV2.Controllers
 
             return View(userprofile);
         }
+
+        public ActionResult CustomerList()
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            string username = User.Identity.Name;
+
+            Employee employee = db.Employee.FirstOrDefault(u => u.Username.Equals(username));
+
+            //Customer customer = new Customer();
+            //var zipCode = customer.ZipCode(z => z.Zipcode == employee.ZipCode).Single();
+
+
+            //return View(customer.ToList());
+
+            return View(db.Customer.Where(z => z.ZipCode == employee.ZipCode).ToList());
+
+        }
+        [HttpPost]
+        public ActionResult CustomerList(Days dayOfWeek)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            string username = User.Identity.Name;
+
+            Employee employee = db.Employee.FirstOrDefault(u => u.Username.Equals(username));
+
+            return View(db.Customer.Where(z => z.ZipCode == employee.ZipCode && z.DayOfWeek.Equals(dayOfWeek.Day)).ToList());
+
+        }
+
     }
 }

@@ -44,7 +44,7 @@ namespace TrashCollectorV2.Controllers
             editDate.CurrentDate =dateAdd.CurrentDate;
             editDate.FutureDate = dateAdd.FutureDate;
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("EditDate", "Customer");
 
         }
 

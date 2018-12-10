@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace TrashCollectorV2.Models
 {
@@ -63,5 +64,19 @@ namespace TrashCollectorV2.Models
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime? EndDate { get; set; }
 
+
+    }
+
+    public class ViewModel
+    {
+        private readonly List<Customer> _customers;
+
+        [Display(Name = "Customer Accounts")]
+        public int CustomerId { get; set; }
+
+        public IEnumerable<SelectListItem> CustomerDays
+        {
+            get { return new SelectList(_customers, "Id", "DayOfWeek"); }
+        }
     }
 }

@@ -44,6 +44,7 @@
                         <ul class="nav navbar-nav">
 
                             <li>@Html.ActionLink("Edit", "Edit", "Employee")</li>
+                            <li>@Html.ActionLink("Customers", "CustomerList", "Employee")</li>
 
                         </ul>
                     }
@@ -56,8 +57,10 @@
                             <li>@Html.ActionLink("Home", "Index", "Home")</li>
                             <li>@Html.ActionLink("About", "About", "Home")</li>
                             <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                            <li>@Html.ActionLink("Edit", "Edit", "Customer")</li>
-
+                            <li>@Html.ActionLink("My Information", "Edit", "Customer")</li>
+                            <li>@Html.ActionLink("Change Login", "MyInfo", "Customer")</li>
+                            <li>@Html.ActionLink("Pick-Up options", "EditDate", "Customer")</li>
+                            <li>@Html.ActionLink("Invoice", "Invoice", "Customer")</li>
                         </ul>
                     }
                 }

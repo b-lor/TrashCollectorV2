@@ -213,8 +213,7 @@ namespace TrashCollectorV2.Controllers
         public ActionResult EditDate()
         {
             ApplicationDbContext db = new ApplicationDbContext();
-
-
+            
             string username = User.Identity.Name;
 
             Customer customer = db.Customer.FirstOrDefault(u => u.Username.Equals(username));
@@ -222,39 +221,73 @@ namespace TrashCollectorV2.Controllers
             Customer updateCustomer = new Customer();
             updateCustomer.DayOfWeek = customer.DayOfWeek;
             updateCustomer.ExtraPickUp = customer.ExtraPickUp;
-
-
             DateAdd dateAdd = db.DateAdd.Take(1).FirstOrDefault();
 
-            DateTime StartDate = (DateTime)dateAdd.CurrentDate;
-            DateTime EndDate = (DateTime)dateAdd.FutureDate;
+            DateTime CurrentDate = (DateTime)dateAdd.CurrentDate;
+            DateTime FutureDate = (DateTime)dateAdd.FutureDate;
+            DateTime StartDate;
+            if (customer.StartDate.HasValue)
+            {
+                StartDate = (DateTime)customer.StartDate;
+            }
+            else
+            {
+                StartDate = DateTime.Now;
+            }
 
+
+            DateTime EndDate;
+            if (customer.EndDate.HasValue)
+            {
+                EndDate = (DateTime)customer.EndDate;
+            }
+            else
+            {
+                EndDate = DateTime.Now;
+            }
 
             DayOfWeek? day = customer.DayOfWeek;
 
             List<DateTime> dates =
-            Enumerable.Range(0, (int)((EndDate - StartDate).TotalDays) + 1)
-            .Select(n => StartDate.AddDays(n))
+            Enumerable.Range(0, (int)((FutureDate - CurrentDate).TotalDays) + 1)
+            .Select(n => CurrentDate.AddDays(n))
             .ToList();
 
             var dayCount = dates.Count(x => x.DayOfWeek == day);
-            ///
             double extraDayCost;
             DateTime extraPickUp = (DateTime)customer.ExtraPickUp;
-            if (extraPickUp >= StartDate && extraPickUp < EndDate)
+            extraDayCost = (extraPickUp >= CurrentDate && extraPickUp < FutureDate) ? 25 : 0;
+
+                TimeSpan d = new TimeSpan(Math.Max(Math.Min(FutureDate.Ticks, EndDate.Ticks) - Math.Max(CurrentDate.Ticks, StartDate.Ticks) + TimeSpan.TicksPerDay, 0));
+                int dayMinus = (int)d.TotalDays;
+            int noNum;
+
+            if (dayMinus > 0 && dayMinus < 7)
             {
-                extraDayCost = 25;
+                noNum = 0;
+
             }
-            extraDayCost = 0;
+            else if (dayMinus >= 7 && dayMinus < 14)
+            {
+                noNum = 1;
+            }
+            else if (dayMinus >= 14 && dayMinus < 21)
+            {
+                noNum = 2;
+            }
+            else if (dayMinus >= 21 && dayMinus < 28)
+            {
+                noNum = 3;
+            }
+            else
+            {
+                noNum = 0;
+            }
 
-            double balance = dayCount * 20 + extraDayCost;
+            double balance = (dayCount - noNum) * 20;
 
 
-
-
-            //double balance = dayCount;
-
-            updateCustomer.Balance = balance;
+            updateCustomer.Balance = balance + extraDayCost;
             updateCustomer.StartDate = customer.StartDate;
             updateCustomer.EndDate = customer.EndDate;
 
@@ -273,22 +306,79 @@ namespace TrashCollectorV2.Controllers
                 customer.DayOfWeek = userprofile.DayOfWeek;
                 customer.ExtraPickUp = userprofile.ExtraPickUp;
 
+
                 DateAdd dateAdd = db.DateAdd.Take(1).FirstOrDefault();
 
-                DateTime StartDate = (DateTime)dateAdd.CurrentDate;
-                DateTime EndDate = (DateTime)dateAdd.FutureDate;
+                DateTime CurrentDate = (DateTime)dateAdd.CurrentDate;
+                DateTime FutureDate = (DateTime)dateAdd.FutureDate;
+                DateTime StartDate;
+                if (customer.StartDate.HasValue)
+                {
+                    StartDate = (DateTime)customer.StartDate;
+                }
+                else
+                {
+                    StartDate = DateTime.Now;
+                }
 
-                DayOfWeek day = DayOfWeek.Monday;
+
+                DateTime EndDate;
+                if (customer.EndDate.HasValue)
+                {
+                    EndDate = (DateTime)customer.EndDate;
+                }
+                else
+                {
+                    EndDate = DateTime.Now;
+                }
+
+              
+
+                DayOfWeek? day = customer.DayOfWeek;
 
                 List<DateTime> dates =
-                Enumerable.Range(0, (int)((EndDate - StartDate).TotalDays) + 1)
-                .Select(n => StartDate.AddDays(n))
+                Enumerable.Range(0, (int)((FutureDate - CurrentDate).TotalDays) + 1)
+                .Select(n => CurrentDate.AddDays(n))
                 .ToList();
 
-                var MondayCount = dates.Count(x => x.DayOfWeek == day);
-                double balance = MondayCount;
+                var dayCount = dates.Count(x => x.DayOfWeek == day);
 
-                customer.Balance = balance;
+                ///
+                double extraDayCost;
+                DateTime extraPickUp = (DateTime)customer.ExtraPickUp;
+
+                extraDayCost = (extraPickUp >= CurrentDate && extraPickUp < FutureDate) ? 25 : 0;
+
+
+                    TimeSpan d = new TimeSpan(Math.Max(Math.Min(FutureDate.Ticks, EndDate.Ticks) - Math.Max(CurrentDate.Ticks, StartDate.Ticks) + TimeSpan.TicksPerDay, 0));
+                   int dayMinus = (int)d.TotalDays;
+                int noNum;
+
+                if (dayMinus > 0 && dayMinus < 7)
+                {
+                    noNum = 0;
+
+                }
+                else if (dayMinus >= 7 && dayMinus < 14)
+                {
+                    noNum = 1;
+                }
+                else if (dayMinus >= 14 && dayMinus < 21)
+                {
+                    noNum = 2;
+                }
+                else if (dayMinus >= 21 && dayMinus < 28)
+                {
+                    noNum = 3;
+                }
+                else
+                {
+                    noNum = 0;
+                }
+
+                double balance = (dayCount - noNum) * 20;
+
+                customer.Balance = balance + extraDayCost;
                 customer.StartDate = userprofile.StartDate;
                 customer.EndDate = userprofile.EndDate;
 
